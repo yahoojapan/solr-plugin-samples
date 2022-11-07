@@ -1,0 +1,13 @@
+/target/
+/artifacts/
+.classpath
+.project
+.settings/
+.DS_Store
+.checkstyle
+*.idea
+*.eml
+*.iml
+*.ipr
+*.iws
+*.swp

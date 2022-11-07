@@ -1,0 +1,34 @@
+<?xml version="1.0" ?>
+
+<config>
+  <luceneMatchVersion>${tests.luceneMatchVersion:LUCENE_CURRENT}</luceneMatchVersion>
+  <dataDir>${solr.data.dir:}</dataDir>
+  <directoryFactory name="DirectoryFactory" class="${solr.directoryFactory:solr.RAMDirectoryFactory}" />
+
+  <indexConfig>
+    <maxBufferedDocs>${solr.test.maxBufferedDocs:2}</maxBufferedDocs>
+  </indexConfig>
+
+  <schemaFactory class="ClassicIndexSchemaFactory" />
+
+  <query>
+    <filterCache class="solr.FastLRUCache" size="512" initialSize="512" autowarmCount="0"/>
+    <queryResultCache class="solr.LRUCache" size="512" initialSize="512" autowarmCount="0"/>
+    <documentCache class="solr.LRUCache" size="512" initialSize="512" autowarmCount="0"/>
+  </query>
+
+  <requestDispatcher>
+    <requestParsers enableStreamBody="true" />
+  </requestDispatcher>
+
+  <searchComponent name="demoComponent" class="jp.co.yahoo.solr.demo.DemoSearchComponent" />
+
+  <requestHandler name="/select" class="solr.SearchHandler">
+    <arr name="last-components">
+      <str>demoComponent</str>
+    </arr>
+  </requestHandler>
+
+  <requestHandler name="/update" class="solr.UpdateRequestHandler" />
+
+</config>
