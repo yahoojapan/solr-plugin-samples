@@ -4,7 +4,7 @@
   <groupId>jp.co.yahoo.solr</groupId>
   <artifactId>demo_plugin_${apache.solr.version}</artifactId>
   <packaging>jar</packaging>
-  <version>1.0.0</version>
+  <version>1.0.1</version>
   <url>https://github.com/yahoojapan/solr-plugin-samples</url>
 
   <properties>
@@ -16,6 +16,13 @@
     <apache.solr.version>7.3.1</apache.solr.version>
     <org.slf4j.version>1.7.24</org.slf4j.version>
   </properties>
+
+  <repositories>
+    <repository>
+      <id>maven.restlet.org</id>
+      <url>https://maven.restlet.talend.com</url>
+    </repository>
+  </repositories>
 
   <dependencies>
     <dependency>
