@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<schema name="some-schema" version="1.6">
+  <fieldType name="string" class="solr.StrField"/>
+  <fieldType name="float_array" class="jp.co.yahoo.solr.demo2.FloatArrayField">
+    <analyzer>
+      <tokenizer class="jp.co.yahoo.solr.demo2.Base64ToFloatArrayTokenizerFactory" length="3"/>
+      <filter class="jp.co.yahoo.solr.demo2.VectorNormalizerTokenFilterFactory"/>
+    </analyzer>
+  </fieldType>
+
+  <field name="id" type="string"/>
+  <uniqueKey>id</uniqueKey>
+
+  <field name="vector" type="float_array" docValues="true"/>
+
+  <field name="some_string" type="string" docValues="true"/>
+  <field name="no_document" type="float_array" docValues="true"/>
+  <field name="no_docValues" type="float_array"/>
+</schema>

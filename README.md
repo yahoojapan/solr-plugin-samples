@@ -3,12 +3,9 @@
 ## 概要
 
 Solrプラグインのデモです。
-現在、「検索結果上位のドキュメントを、そのフィールド値に基づいて並べ替える」プラグインを題材にしています。
+ぜひ以下のチュートリアルをご覧ください。
 
-
-## 解説
-
-[Solrプラグイン開発チュートリアル](./docs/index.md)
+## [Solrプラグイン開発チュートリアル](./docs/index.md)
 
 ## LICENSE
 
@@ -21,6 +18,6 @@ Some code in this repository were derived and modified from [Apache Solr 7.3.1](
 | jp.co.yahoo.solr.demo.DemoMergeStrategy#merge                                  | org.apache.solr.handler.component.QueryComponent#mergeIds                               |
 | jp.co.yahoo.solr.demo.DemoMergeStrategy$FakeScorer                             | org.apache.solr.handler.component.QueryComponent$FakeScorer                             |
 | jp.co.yahoo.solr.demo.DemoMergeStrategy#handleMergeFields                      | org.apache.solr.handler.component.QueryComponent#doFieldSortValues                      |
-| jp.co.yahoo.solr.demo.DemoRankQuery#getTopDocsCollector                        | org.apache.solr.search.SolrIndexSearcher#buildTopDocsCollector                          |
+| jp.co.yahoo.solr.demo.DemoRankQuery#getTopDocsCollector<br>jp.co.yahoo.solr.demo.Demo2RankQuery#getTopDocsCollector | org.apache.solr.search.SolrIndexSearcher#buildTopDocsCollector |
 
 This repository itself is published under the [MIT License](./LICENSE).
