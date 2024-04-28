@@ -18,7 +18,7 @@ public class Demo2SearchComponentWithGapsTest extends RestTestBase {
     File testHome = createTempDir().toFile();
     FileUtils.copyDirectory(getFile("solr"), testHome);
 
-    createJettyAndHarness(testHome.getAbsolutePath(), "solrconfig_demo2_singleSegment.xml", "schema_demo2.xml", "/solr", true, null);
+    createJettyAndHarness(testHome.getAbsolutePath(), "solrconfig_demo2.xml", "schema_demo2.xml", "/solr", true, null);
   }
 
   private static String base64StringOf(float... vector) {

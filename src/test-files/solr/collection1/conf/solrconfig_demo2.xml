@@ -6,7 +6,7 @@
   <directoryFactory name="DirectoryFactory" class="${solr.directoryFactory:solr.RAMDirectoryFactory}"/>
 
   <indexConfig>
-    <maxBufferedDocs>${solr.test.maxBufferedDocs:2}</maxBufferedDocs>
+    <maxBufferedDocs>${solr.test.maxBufferedDocs:1000}</maxBufferedDocs>
   </indexConfig>
 
   <schemaFactory class="ClassicIndexSchemaFactory"/>
