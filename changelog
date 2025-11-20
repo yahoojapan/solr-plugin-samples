@@ -1,3 +1,6 @@
+* Sat Apr 27 2024 - 1.1.1
+- Fix handling of missing docValues in demo2
+
 * Mon Sep 11 2023 - 1.1.0
 - Add another demo plugin and four sections of docs
 

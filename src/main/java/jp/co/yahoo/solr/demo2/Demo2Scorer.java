@@ -15,6 +15,7 @@ public class Demo2Scorer extends Scorer {
   private final BinaryDocValues binaryDocValues;
   private final float[] queryVector;
 
+  private int cachedDocID;
   private float cachedScore;
 
   public Demo2Scorer(Demo2Weight demo2Weight, LeafReaderContext leafReaderContext, Scorer wrappedScorer) throws IOException {
@@ -24,6 +25,7 @@ public class Demo2Scorer extends Scorer {
     this.binaryDocValues = leafReaderContext.reader().getBinaryDocValues(demo2Context.fieldName);
     this.queryVector = demo2Context.queryVector;
 
+    cachedDocID = -1;
     cachedScore = -Float.MAX_VALUE;
   }
 
@@ -37,12 +39,14 @@ public class Demo2Scorer extends Scorer {
     if (null == binaryDocValues) {
       return -Float.MAX_VALUE;
     }
-    assert binaryDocValues.docID() <= docID();
-    if (binaryDocValues.docID() == docID()) {
+    if (cachedDocID == docID()) {
       return cachedScore;
     }
 
-    binaryDocValues.advance(docID());
+    if (binaryDocValues.docID() < docID()) {
+      binaryDocValues.advance(docID());
+    }
+    cachedDocID = docID();
     if (binaryDocValues.docID() == docID()) {
       BytesRef bytesRef = binaryDocValues.binaryValue();
       FloatBuffer floatBuffer = ByteBuffer.wrap(bytesRef.bytes, bytesRef.offset, bytesRef.length).asFloatBuffer();

@@ -31,6 +31,7 @@ public class Demo2SearchComponentSingleShardTest extends RestTestBase {
   public void setUpBefore() {
     assertU(adoc("id", "0", "vector", base64StringOf(0, 3, 4)));  // -> (0, 0.6, 0.8)
     assertU(adoc("id", "1", "vector", base64StringOf(0, -5, 0)));  // -> (0, -1.0, 0)
+    assertU(commit());  // To test with multiple segments
     assertU(adoc("id", "2", "vector", base64StringOf(0, 0, 0)));
     assertU(adoc("id", "3"));
     assertU(commit());

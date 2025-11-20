@@ -131,12 +131,14 @@
     if (null == binaryDocValues) {
       return -Float.MAX_VALUE;
     }
-    assert binaryDocValues.docID() <= docID();
-    if (binaryDocValues.docID() == docID()) {
+    if (cachedDocID == docID()) {
       return cachedScore;
     }
 
-    binaryDocValues.advance(docID());
+    if (binaryDocValues.docID() < docID()) {
+      binaryDocValues.advance(docID());
+    }
+    cachedDocID = docID();
     if (binaryDocValues.docID() == docID()) {
       BytesRef bytesRef = binaryDocValues.binaryValue();
       FloatBuffer floatBuffer = ByteBuffer.wrap(bytesRef.bytes, bytesRef.offset, bytesRef.length).asFloatBuffer();
@@ -161,12 +163,15 @@
 この場合、常にエラー値である `-Float.MAX_VALUE` を返すものとしてearly returnしています。
 
 他のポイントとして、シャードごとの通し番号順にアクセスするというものもありました。
-`Scorer` が内包するイテレータも、この制約を満たしつつ順々にドキュメントに注目していくため（この点 `assert` しています）、単に `DocValues#docID()` と `Scorer#docID()` を同期すれば良いです。
-またこのとき、すでに同期している（つまり、すでにスコアしている）場合は、そのときのスコアをキャッシュしておいて返す実装としています。
+`Scorer` が内包するイテレータも、この制約を満たしつつ順々にドキュメントに注目していくため、単に `DocValues#docID()` と `Scorer#docID()` を同期すれば良いです。
+またこのとき、この `docID` について既にスコアしている場合は、キャッシュしておいたスコアを返す実装としています。
 これにより、コサイン類似度の不要な再計算を防止できます。
 
 同期は `binaryDocValues.advance(docID())` で試みます。
-その結果、うまく同期できれば、`DocValues` が注目しているフィールドの値が、`Scorer` が注目しているドキュメントについて存在するということです。
+同期は、`DocValues#docID() < Scorer#docID()` の時のみ試みれば良いです。
+そうでない時は、すでに同期できているか、すでに値が存在しないと分かっているためです。
+
+うまく同期できれば、`DocValues` が注目しているフィールドの値が、`Scorer` が注目しているドキュメントについて存在するということです。
 このとき、フィールドの値を取得し、キャストし、リクエストパラメータの値とともにベクトルと見なしてドット積を計算しています。
 なお、ベクトルと見なすと長さが異なる場合は、エラー値を返す実装としています。
 

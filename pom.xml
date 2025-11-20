@@ -4,7 +4,7 @@
   <groupId>jp.co.yahoo.solr</groupId>
   <artifactId>demo_plugin_7.3.1</artifactId>
   <packaging>jar</packaging>
-  <version>1.1.0</version>
+  <version>1.1.1</version>
   <url>https://github.com/yahoojapan/solr-plugin-samples</url>
 
   <properties>
